@@ -6,6 +6,7 @@ from textual.reactive import reactive
 from .toggle_connection_button import ToggleConnectionButton
 from .anc import AncController
 from .battery import BatteryIndicator
+from .ear_detection import EarDetection
 from utils import is_connected
 
 
@@ -36,6 +37,7 @@ class Device(Vertical):
         self._display_header()
         self._display_toggle_button()
         self._display_battery()
+        self._display_ear_detection()
         self._display_anc()
 
     def _display_header(self):
@@ -59,6 +61,12 @@ class Device(Vertical):
             self._mount_on_content_area(
                 AncController(self._data["address"],
                               self._data["capabilities"]["anc"])
+            )
+
+    def _display_ear_detection(self):
+        if self._data.get("capabilities", False) and self._data["capabilities"].get("earDetection", False):
+            self._mount_on_content_area(
+                EarDetection(self._data["capabilities"]["earDetection"])
             )
 
     def _get_content_area(self):
