@@ -1,7 +1,7 @@
 from websocket_client import WebSocketClient
 from textual.app import App, ComposeResult
 from textual.containers import Horizontal
-from textual.widgets import Header, Footer, Static
+from textual.widgets import Footer, Static
 from textual.binding import Binding
 
 from components.sidebar import Sidebar
@@ -34,7 +34,6 @@ class Omarchpods(App):
         self._selected_device = None
 
     def compose(self) -> ComposeResult:
-        yield Header(show_clock=True)
         yield Static(APPLICATION_TITLE, id="ascii-header")
         with Horizontal(id="main-content"):
             yield Sidebar()
