@@ -22,7 +22,6 @@ class Omarchpods(App):
     CSS_PATH = "main.css"
     BINDINGS = [
         Binding("q", "quit", "Quit", show=True),
-        Binding("r", "refresh_devices", "Refresh", show=True),
     ]
 
     def __init__(self, **kwargs):
@@ -42,10 +41,6 @@ class Omarchpods(App):
 
     def on_mount(self) -> None:
         self.websocket_client.get_all()
-
-    def action_refresh_devices(self) -> None:
-        self.websocket_client.get_all()
-        self.notify("Refreshing devices...")
 
     def select_device(self, device):
         is_different_device = (
