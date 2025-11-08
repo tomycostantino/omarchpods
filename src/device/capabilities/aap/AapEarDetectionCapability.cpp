@@ -9,7 +9,7 @@ namespace MagicPodsCore
     nlohmann::json AapEarDetectionCapability::CreateJsonBody()
     {
         auto bodyJson = nlohmann::json::object();
-        bodyJson["selected"] = true; // Always true for ear detection
+        bodyJson["status"] = AapEarDetectionStateToString(currentState);
         return bodyJson;
     }
 
@@ -20,8 +20,10 @@ namespace MagicPodsCore
 
     AapEarDetectionCapability::AapEarDetectionCapability(AapDevice& device) : AapCapability("earDetection", true, device)
     {
+        isAvailable = true;  // Ear detection is always available
         watcherEventId = watcher.GetEvent().Subscribe([this](size_t id, AapEarDetectionState state){
             Logger::Info("Ear detection state: %s", AapEarDetectionStateToString(state).c_str());
+            currentState = state;
 
             if (state == AapEarDetectionState::OutOfEar) {
                 system("playerctl pause 2>/dev/null || true");

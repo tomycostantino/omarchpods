@@ -12,6 +12,7 @@ namespace MagicPodsCore
     private:
         AapEarDetectionWatcher watcher{};
         size_t watcherEventId;
+        AapEarDetectionState currentState = AapEarDetectionState::OutOfEar;
 
     protected:
         nlohmann::json CreateJsonBody() override;
