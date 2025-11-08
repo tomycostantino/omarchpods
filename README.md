@@ -2,7 +2,13 @@
 
 A fork of [MagicPodsCore](https://github.com/steam3d/MagicPodsCore) with a TUI, designed for Omarchy.
 
-## 🎨 Features
+## Install
+
+```
+git clone git@github.com:tomycostantino/omarchpods.git && \
+cd omarchpods && \
+makepkg -SI
+```
 
 ## 🎧 Headphones supported
 
@@ -23,17 +29,7 @@ A fork of [MagicPodsCore](https://github.com/steam3d/MagicPodsCore) with a TUI, 
 |                  | Beats Flex             |                   |
 |                  | Beats Solo Buds        |                   |
 
-Some of the headphones in the table do not have or do not support the noise control feature.
-
-## Install
-
-Build
-
-```
-git clone git@github.com:tomycostantino/omarchpods.git && \
-cd omarchpods && \
-makepkg -SI
-```
-
 Original MagicPodsCore developed by [Aleksandr Maslov](https://github.com/steam3d/) and [Andrey Litvintsev](https://github.com/andreylitvintsev)
+
+Fork developed by [Tomas Costantino](https://github.com/tomycostantino/)
 
