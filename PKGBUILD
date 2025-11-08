@@ -32,7 +32,7 @@ package() {
     cd "${srcdir}/.."
 
 
-    install -Dm755 "build/omarchpodsCore" "${pkgdir}/usr/bin/omarchpods"
+    install -Dm755 "build/MagicPodsCore" "${pkgdir}/usr/bin/omarchpods"
 
     install -dm755 "${pkgdir}/opt/omarchpods"
     python -m venv "${pkgdir}/opt/omarchpods/venv"
