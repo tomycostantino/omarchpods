@@ -104,10 +104,7 @@ class Omarchpods(App):
 
         if sorted_devices:
             first_device = sorted_devices[0]
-            should_auto_select = (
-                self._selected_device is None or
-                not is_connected(self._selected_device)
-            )
+            should_auto_select = self._selected_device is None
 
             if should_auto_select and is_connected(first_device):
                 self.select_device(first_device)
