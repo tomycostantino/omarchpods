@@ -14,6 +14,13 @@ namespace MagicPodsCore
         size_t watcherEventId;
         AapEarDetectionState currentState = AapEarDetectionState::OutOfEar;
 
+        void HandleEarRemoved();
+        void HandleEarInserted();
+        void PausePlayback();
+        void ResumePlayback();
+        void SwitchToDefaultSink();
+        void SwitchToBluetoothSink();
+
     protected:
         nlohmann::json CreateJsonBody() override;
         void OnReceivedData(const std::vector<unsigned char> &data) override;

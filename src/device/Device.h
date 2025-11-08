@@ -54,6 +54,13 @@ namespace MagicPodsCore {
             return _deviceInfo->GetAddress();
         }
 
+        std::string GetBluezOutputAddress() const {
+            std::lock_guard lock{_propertyMutex};
+            std::string addr = _deviceInfo->GetAddress();
+            std::replace(addr.begin(), addr.end(), ':', '_');
+            return addr;
+        }
+
         bool GetConnected() const {
             std::lock_guard lock{_propertyMutex};
             return _deviceInfo->GetConnectionStatus().GetValue();

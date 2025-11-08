@@ -3,6 +3,7 @@
 
 #include "AapEarDetectionCapability.h"
 #include <cstdlib>
+#include <sstream>
 
 namespace MagicPodsCore
 {
@@ -21,17 +22,14 @@ namespace MagicPodsCore
     AapEarDetectionCapability::AapEarDetectionCapability(AapDevice& device) : AapCapability("earDetection", true, device)
     {
         isAvailable = true;  // Ear detection is always available
-        watcherEventId = watcher.GetEvent().Subscribe([this](size_t id, AapEarDetectionState state){
+        watcherEventId = watcher.GetEvent().Subscribe([this](size_t id, AapEarDetectionState state) {
             Logger::Info("Ear detection state: %s", AapEarDetectionStateToString(state).c_str());
             currentState = state;
 
             if (state == AapEarDetectionState::OutOfEar) {
-                system("playerctl pause 2>/dev/null || true");
-                std::this_thread::sleep_for(std::chrono::milliseconds(250));
-                system("pactl set-default-sink alsa_output.pci-0000_c1_00.6.HiFi__Speaker__sink 2>/dev/null || true");
+                HandleEarRemoved();
             } else if (state == AapEarDetectionState::InEar) {
-                system("pactl set-default-sink bluez_output.F8_73_DF_23_CA_E9.1 2>/dev/null || true");
-                system("playerctl play 2>/dev/null || true");
+                HandleEarInserted();
             }
 
             _onChanged.FireEvent(*this);
@@ -41,5 +39,40 @@ namespace MagicPodsCore
     AapEarDetectionCapability::~AapEarDetectionCapability()
     {
         watcher.GetEvent().Unsubscribe(watcherEventId);
+    }
+
+    void AapEarDetectionCapability::HandleEarRemoved()
+    {
+        PausePlayback();
+        std::this_thread::sleep_for(std::chrono::milliseconds(250));
+        SwitchToDefaultSink();
+    }
+
+    void AapEarDetectionCapability::HandleEarInserted()
+    {
+        SwitchToBluetoothSink();
+        ResumePlayback();
+    }
+
+    void AapEarDetectionCapability::PausePlayback()
+    {
+        ExecuteCommand("playerctl pause");
+    }
+
+    void AapEarDetectionCapability::ResumePlayback()
+    {
+        ExecuteCommand("playerctl play");
+    }
+
+    void AapEarDetectionCapability::SwitchToDefaultSink()
+    {
+        ExecuteCommand("pactl set-default-sink alsa_output.pci-0000_c1_00.6.HiFi__Speaker__sink");
+    }
+
+    void AapEarDetectionCapability::SwitchToBluetoothSink()
+    {
+        std::string btAddress = device.GetBluezOutputAddress();
+        std::string command = "pactl set-default-sink bluez_output." + btAddress + ".1";
+        ExecuteCommand(command);
     }
 }

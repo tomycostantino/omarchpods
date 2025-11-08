@@ -31,4 +31,10 @@ namespace MagicPodsCore
     void Capability::SetFromJson(const nlohmann::json &json)
     {
     }
+
+    void Capability::ExecuteCommand(const std::string& command)
+    {
+        std::string fullCommand = command + " 2>/dev/null || true";
+        system(fullCommand.c_str());
+    }
 }
