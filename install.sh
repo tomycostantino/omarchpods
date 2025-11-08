@@ -24,7 +24,6 @@ echo -e "${YELLOW}Installing system dependencies...${NC}"
 sudo pacman -S --needed --noconfirm base-devel cmake bluez python git
 
 echo -e "${YELLOW}Building Omarchpods package...${NC}"
-cd "$(dirname "$0")/.."
 makepkg -si --noconfirm
 
 echo -e "${YELLOW}Setting up Omarchpods Core service...${NC}"

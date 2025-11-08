@@ -1,12 +1,12 @@
 [Unit]
-Description=MagicPods Core Service
+Description=Omarchpods Core Service
 Documentation=https://github.com/steam3d/MagicPodsCore
 After=bluetooth.service
 Wants=bluetooth.service
 
 [Service]
 Type=simple
-ExecStart=/usr/bin/magicpods-core
+ExecStart=/usr/bin/omarchpods
 Restart=on-failure
 RestartSec=5
 StandardOutput=journal

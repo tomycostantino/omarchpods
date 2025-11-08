@@ -45,9 +45,7 @@ package() {
     install -dm755 "${pkgdir}/opt/omarchpods/ui"
     cp -r ui/* "${pkgdir}/opt/omarchpods/ui/"
 
-    install -Dm755 "arch/omarchpods-ui" "${pkgdir}/usr/bin/omarchpods-ui"
-
-    install -Dm644 "arch/omarchpods.service" "${pkgdir}/usr/lib/systemd/system/omarchpods.service"
+    install -Dm644 "omarchpods.service" "${pkgdir}/usr/lib/systemd/system/omarchpods.service"
 
     if [ -f "LICENSE" ]; then
         install -Dm644 "LICENSE" "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
