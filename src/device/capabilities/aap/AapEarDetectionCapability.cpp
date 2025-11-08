@@ -27,7 +27,10 @@ namespace MagicPodsCore
 
             if (state == AapEarDetectionState::OutOfEar) {
                 system("playerctl pause 2>/dev/null || true");
+                std::this_thread::sleep_for(std::chrono::milliseconds(250));
+                system("pactl set-default-sink alsa_output.pci-0000_c1_00.6.HiFi__Speaker__sink 2>/dev/null || true");
             } else if (state == AapEarDetectionState::InEar) {
+                system("pactl set-default-sink bluez_output.F8_73_DF_23_CA_E9.1 2>/dev/null || true");
                 system("playerctl play 2>/dev/null || true");
             }
 
