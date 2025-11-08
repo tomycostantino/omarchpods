@@ -2,6 +2,7 @@
 // Tomas Costantino 2025
 
 #include "AapEarDetectionCapability.h"
+#include <cstdlib>
 
 namespace MagicPodsCore
 {
@@ -21,6 +22,13 @@ namespace MagicPodsCore
     {
         watcherEventId = watcher.GetEvent().Subscribe([this](size_t id, AapEarDetectionState state){
             Logger::Info("Ear detection state: %s", AapEarDetectionStateToString(state).c_str());
+
+            if (state == AapEarDetectionState::OutOfEar) {
+                system("playerctl pause 2>/dev/null || true");
+            } else if (state == AapEarDetectionState::InEar) {
+                system("playerctl play 2>/dev/null || true");
+            }
+
             _onChanged.FireEvent(*this);
         });
     }
