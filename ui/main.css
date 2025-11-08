@@ -1,27 +1,16 @@
-Screen {
-    background: $surface;
-}
-
 #ascii-header {
     width: 100%;
     height: auto;
     content-align: center middle;
     text-align: center;
-    background: $boost;
     color: $accent;
     padding: 1;
     border-bottom: solid $border;
 }
 
-#main-content {
-    height: 1fr;
-}
-
 Sidebar {
     width: 30;
-    background: $panel;
     border-right: solid $border;
-    padding: 1;
 }
 
 .sidebar-header {
@@ -49,14 +38,6 @@ Sidebar {
 .content-message {
     padding: 2;
     background: $panel;
-}
-
-DeviceInfoContainer {
-    height: 100%;
-}
-
-DeviceDetails {
-    padding: 1;
 }
 
 .device-title {

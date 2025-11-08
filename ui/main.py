@@ -35,7 +35,7 @@ class Omarchpods(App):
 
     def compose(self) -> ComposeResult:
         yield Static(APPLICATION_TITLE, id="ascii-header")
-        with Horizontal(id="main-content"):
+        with Horizontal():
             yield Sidebar()
             yield Device()
         yield Footer()

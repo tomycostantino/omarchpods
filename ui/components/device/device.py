@@ -56,17 +56,17 @@ class Device(Vertical):
                 BatteryIndicator(self._data["capabilities"]["battery"])
             )
 
+    def _display_ear_detection(self):
+        if self._data.get("capabilities", False) and self._data["capabilities"].get("earDetection", False):
+            self._mount_on_content_area(
+                EarDetection(self._data["capabilities"]["earDetection"])
+            )
+
     def _display_anc(self):
         if self._data.get("capabilities", False) and self._data["capabilities"].get("anc", False):
             self._mount_on_content_area(
                 AncController(self._data["address"],
                               self._data["capabilities"]["anc"])
-            )
-
-    def _display_ear_detection(self):
-        if self._data.get("capabilities", False) and self._data["capabilities"].get("earDetection", False):
-            self._mount_on_content_area(
-                EarDetection(self._data["capabilities"]["earDetection"])
             )
 
     def _get_content_area(self):
