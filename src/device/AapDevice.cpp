@@ -5,6 +5,7 @@
 #include "AapDevice.h"
 #include "capabilities/aap/AapAncCapability.h"
 #include "capabilities/aap/AapConversationAwarenessCapability.h"
+#include "capabilities/aap/AapEarDetectionCapability.h"
 #include "capabilities/aap/AapConversationAwarenessStateCapability.h"
 #include "capabilities/aap/AapNoiseCancellationOneAirPodModeCapability.h"
 #include "capabilities/aap/AapPressAndHoldDurationCapability.h"
@@ -44,6 +45,7 @@ namespace MagicPodsCore
         device->capabilities.push_back(std::make_unique<AapAncCapability>(*device));
         device->capabilities.push_back(std::make_unique<AapConversationAwarenessCapability>(*device));
         device->capabilities.push_back(std::make_unique<AapConversationAwarenessStateCapability>(*device));
+        device->capabilities.push_back(std::make_unique<AapEarDetectionCapability>(*device));
         device->capabilities.push_back(std::make_unique<AapNoiseCancellationOneAirPodModeCapability>(*device));
         device->capabilities.push_back(std::make_unique<AapPressAndHoldDurationCapability>(*device));
         device->capabilities.push_back(std::make_unique<AapPressSpeedCapability>(*device));
