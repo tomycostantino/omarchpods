@@ -53,6 +53,7 @@ void HandleGetDevicesRequest(auto *ws, const nlohmann::json& json, uWS::OpCode o
 }
 
 void HandleConnectDeviceRequest(auto *ws, const nlohmann::json& json, uWS::OpCode opCode, uWS::App& app, DevicesInfoFetcher& devicesInfoFetcher) {
+    // TODO: Doesn't timeout. Need to go further into the cpp code
     Logger::Info("HandleConnectDeviceRequest");
 
     auto deviceAddress = json.at("arguments").at("address").template get<std::string>();

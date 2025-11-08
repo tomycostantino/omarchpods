@@ -1,0 +1,23 @@
+[Unit]
+Description=MagicPods Core Service
+Documentation=https://github.com/steam3d/MagicPodsCore
+After=bluetooth.service
+Wants=bluetooth.service
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/magicpods-core
+Restart=on-failure
+RestartSec=5
+StandardOutput=journal
+StandardError=journal
+
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/var/lib/bluetooth
+
+[Install]
+WantedBy=multi-user.target
+
