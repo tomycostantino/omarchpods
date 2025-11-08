@@ -7,7 +7,7 @@ A fork of [MagicPodsCore](https://github.com/steam3d/MagicPodsCore) with a TUI, 
 ```
 git clone git@github.com:tomycostantino/omarchpods.git && \
 cd omarchpods && \
-makepkg -SI
+bash install.sh
 ```
 
 ## 🎧 Headphones supported
@@ -32,4 +32,3 @@ makepkg -SI
 Original MagicPodsCore developed by [Aleksandr Maslov](https://github.com/steam3d/) and [Andrey Litvintsev](https://github.com/andreylitvintsev)
 
 Fork developed by [Tomas Costantino](https://github.com/tomycostantino/)
-
