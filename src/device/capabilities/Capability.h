@@ -20,6 +20,7 @@ namespace MagicPodsCore
         virtual nlohmann::json CreateJsonBody();
         virtual void Reset();
         void ExecuteCommand(const std::string& command);
+        std::string ExecuteCommandWithOutput(const std::string& command);
 
     public:
         explicit Capability(const std::string &name, bool isReadOnly) : name(name), isReadOnly(isReadOnly) {}

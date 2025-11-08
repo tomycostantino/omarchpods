@@ -45,7 +45,7 @@ namespace MagicPodsCore
     {
         PausePlayback();
         std::this_thread::sleep_for(std::chrono::milliseconds(250));
-        SwitchToDefaultSink();
+        SwitchToNonBluetoothSink();
     }
 
     void AapEarDetectionCapability::HandleEarInserted()
@@ -64,9 +64,16 @@ namespace MagicPodsCore
         ExecuteCommand("playerctl play");
     }
 
-    void AapEarDetectionCapability::SwitchToDefaultSink()
+    void AapEarDetectionCapability::SwitchToNonBluetoothSink()
     {
-        ExecuteCommand("pactl set-default-sink alsa_output.pci-0000_c1_00.6.HiFi__Speaker__sink");
+        std::string nonBluetoothSink = ExecuteCommandWithOutput("pactl list short sinks | grep -v \"bluez\" | grep \"alsa_output\" | head -1 | awk '{print $2}'");
+
+        if (nonBluetoothSink.empty()) {
+            return;
+        }
+
+        std::string command = "pactl set-default-sink " + nonBluetoothSink;
+        ExecuteCommand(command);
     }
 
     void AapEarDetectionCapability::SwitchToBluetoothSink()

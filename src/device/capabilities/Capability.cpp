@@ -37,4 +37,19 @@ namespace MagicPodsCore
         std::string fullCommand = command + " 2>/dev/null || true";
         system(fullCommand.c_str());
     }
+
+    std::string Capability::ExecuteCommandWithOutput(const std::string& command)
+    {
+        FILE* pipe = popen((command + " 2>/dev/null").c_str(), "r");
+        if (!pipe) return "";
+
+        char buffer[256];
+        std::string result;
+        if (fgets(buffer, sizeof(buffer), pipe) != nullptr) {
+            result = buffer;
+            result.erase(result.find_last_not_of("\n\r") + 1);
+        }
+        pclose(pipe);
+        return result;
+    }
 }
