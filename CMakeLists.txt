@@ -8,7 +8,7 @@ set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -DDEBUG")
 
 configure_file(config/Config.h.in src/Config.h)
 
-add_executable(MagicPodsCore 
+add_executable(MagicPodsCore
     src/main.cpp
 
     src/tests/TestsSgb.cpp
@@ -37,6 +37,7 @@ add_executable(MagicPodsCore
     src/sdk/aap/watchers/AapWatcher.cpp
     src/sdk/aap/watchers/AapConversationAwarenessWatcher.cpp
     src/sdk/aap/watchers/AapConversationAwarenessStateWatcher.cpp
+    src/sdk/aap/watchers/AapEarDetectionWatcher.cpp
     src/sdk/aap/watchers/AapNoiseCancellationOneAirPodWatcher.cpp
     src/sdk/aap/watchers/AapPressAndHoldDurationWatcher.cpp
     src/sdk/aap/watchers/AapPressSpeedWatcher.cpp
@@ -59,6 +60,7 @@ add_executable(MagicPodsCore
     src/device/capabilities/aap/AapBatteryCapability.cpp
     src/device/capabilities/aap/AapConversationAwarenessCapability.cpp
     src/device/capabilities/aap/AapConversationAwarenessStateCapability.cpp
+    src/device/capabilities/aap/AapEarDetectionCapability.cpp
     src/device/capabilities/aap/AapNoiseCancellationOneAirPodModeCapability.cpp
     src/device/capabilities/aap/AapPressAndHoldDurationCapability.cpp
     src/device/capabilities/aap/AapPressSpeedCapability.cpp
@@ -68,7 +70,7 @@ add_executable(MagicPodsCore
     src/device/capabilities/aap/AapToneVolumeCapability.cpp
     src/device/capabilities/aap/AapMuteMicrophoneEndCallCapability.cpp
     src/device/capabilities/aap/AapAdaptiveAudioNoiseCapability.cpp
-    
+
     src/device/capabilities/sgb/GalaxyBudsCapability.cpp
     src/device/capabilities/sgb/GalaxyBudsAncCapability.cpp
     src/device/capabilities/sgb/GalaxyBudsBatteryCapability.cpp
@@ -76,7 +78,7 @@ add_executable(MagicPodsCore
     src/device/capabilities/Capability.cpp
     src/device/AapDevice.cpp
     src/device/GalaxyBudsDevice.cpp
-    src/device/DeviceBattery.cpp    
+    src/device/DeviceBattery.cpp
     src/device/Device.cpp
 
     src/dbus/DBusDeviceInfo.cpp
@@ -86,7 +88,7 @@ add_executable(MagicPodsCore
 )
 add_subdirectory(dependencies)
 target_include_directories(MagicPodsCore PRIVATE
-    src    
+    src
     dependencies/json
     ${PROJECT_BINARY_DIR}/src
 )
