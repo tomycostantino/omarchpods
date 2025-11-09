@@ -55,3 +55,9 @@ body {
     background-repeat: no-repeat;
     background-position: center;
 }
+
+@media (max-width: 768px) {
+    .ascii {
+        font-size: 0.1em;
+    }
+}
