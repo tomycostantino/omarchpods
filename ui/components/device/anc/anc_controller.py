@@ -1,3 +1,4 @@
+from typing import Dict, Any
 from textual.containers import Vertical, Horizontal
 from textual.app import ComposeResult
 from textual.widgets import Static
@@ -9,7 +10,12 @@ from .anc_noise_cancellation_switch import AncNoiseCancellationSwitch
 
 
 class AncController(Vertical):
-    def __init__(self, address: str, anc: dict, **kwargs):
+    def __init__(self, address: str, anc: Dict[str, Any], **kwargs):
+        """
+        Args:
+            address: Bluetooth address of the device
+            anc: ANC capability data from the device
+        """
         super().__init__(**kwargs)
         self._address = address
         self._anc = anc

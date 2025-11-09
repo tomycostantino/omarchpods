@@ -1,13 +1,18 @@
+from typing import Dict, Any
 from textual.widgets import Static
 
 
 class EarDetection(Static):
-    def __init__(self, ear_detection: dict, **kwargs):
+    def __init__(self, ear_detection: Dict[str, Any], **kwargs):
+        """
+        Args:
+            ear_detection: Ear detection capability data containing status
+        """
         super().__init__(**kwargs)
         self._ear_detection = ear_detection
         self.update_display()
 
-    def update_display(self):
+    def update_display(self) -> None:
         status = self._ear_detection.get("status", "Unknown")
         if status == "InEar":
             display_status = "In Ear"

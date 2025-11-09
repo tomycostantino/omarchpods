@@ -1,8 +1,20 @@
+from typing import Dict, Any
 from textual.widgets import Button
 
 
 class AncSwitch(Button):
-    def __init__(self, address: str, anc: dict, mode_value: int, mode_name: str, **kwargs):
+    """
+    Base class for ANC mode switches.
+    """
+
+    def __init__(self, address: str, anc: Dict[str, Any], mode_value: int, mode_name: str, **kwargs):
+        """
+        Args:
+            address: Bluetooth address of the device
+            anc: ANC capability data from the device
+            mode_value: Bit flag value for this mode
+            mode_name: Display name for this mode
+        """
         super().__init__(**kwargs)
         self._address = address
         self._anc = anc
