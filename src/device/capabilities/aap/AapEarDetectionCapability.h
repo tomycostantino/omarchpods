@@ -16,9 +16,7 @@ namespace MagicPodsCore
 
         void HandleEarRemoved();
         void HandleEarInserted();
-        void TogglePlayback();
-        void SwitchToNonBluetoothSink();
-        void SwitchToBluetoothSink();
+        void SwitchToDeviceSink();
 
     protected:
         nlohmann::json CreateJsonBody() override;

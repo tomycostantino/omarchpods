@@ -52,4 +52,27 @@ namespace MagicPodsCore
         pclose(pipe);
         return result;
     }
+
+    void Capability::TogglePlayback()
+    {
+        ExecuteCommand("playerctl play-pause");
+    }
+
+    void Capability::SwitchToNonBluetoothSink()
+    {
+        std::string nonBluetoothSink = ExecuteCommandWithOutput("pactl list short sinks | grep -v \"bluez\" | grep \"alsa_output\" | head -1 | awk '{print $2}'");
+
+        if (nonBluetoothSink.empty()) {
+            return;
+        }
+
+        std::string command = "pactl set-default-sink " + nonBluetoothSink;
+        ExecuteCommand(command);
+    }
+
+    void Capability::SwitchToBluetoothSink(std::string btAddr)
+    {
+      std::string command = "pactl set-default-sink bluez_output." + btAddr + ".1";
+      ExecuteCommand(command);
+    }
 }

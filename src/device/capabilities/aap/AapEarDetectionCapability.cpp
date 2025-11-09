@@ -2,8 +2,6 @@
 // Tomas Costantino 2025
 
 #include "AapEarDetectionCapability.h"
-#include <cstdlib>
-#include <sstream>
 
 namespace MagicPodsCore
 {
@@ -50,31 +48,13 @@ namespace MagicPodsCore
 
     void AapEarDetectionCapability::HandleEarInserted()
     {
-        SwitchToBluetoothSink();
+        SwitchToDeviceSink();
         TogglePlayback();
     }
 
-    void AapEarDetectionCapability::TogglePlayback()
+    void AapEarDetectionCapability::SwitchToDeviceSink()
     {
-        ExecuteCommand("playerctl play-pause");
-    }
-
-    void AapEarDetectionCapability::SwitchToNonBluetoothSink()
-    {
-        std::string nonBluetoothSink = ExecuteCommandWithOutput("pactl list short sinks | grep -v \"bluez\" | grep \"alsa_output\" | head -1 | awk '{print $2}'");
-
-        if (nonBluetoothSink.empty()) {
-            return;
-        }
-
-        std::string command = "pactl set-default-sink " + nonBluetoothSink;
-        ExecuteCommand(command);
-    }
-
-    void AapEarDetectionCapability::SwitchToBluetoothSink()
-    {
-        std::string btAddress = device.GetBluezOutputAddress();
-        std::string command = "pactl set-default-sink bluez_output." + btAddress + ".1";
-        ExecuteCommand(command);
+        std::string btAddr = device.GetBluezOutputAddress();
+        SwitchToBluetoothSink(btAddr);
     }
 }
