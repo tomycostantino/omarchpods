@@ -13,6 +13,8 @@ class EarDetection(Static):
             display_status = "In Ear"
         elif status == "OutOfEar":
             display_status = "Out of Ear"
+        elif status == "InCase":
+            display_status = "In Case"
         else:
             display_status = status
         self.update(f"[b]👂:[/b] {display_status}")

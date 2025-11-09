@@ -12,6 +12,7 @@ namespace MagicPodsCore
     {
         InEar = 0x00,
         OutOfEar = 0x01,
+        InCase = 0x02
     };
 
     static std::string AapEarDetectionStateToString(AapEarDetectionState value)
@@ -22,6 +23,8 @@ namespace MagicPodsCore
             return "InEar";
         case AapEarDetectionState::OutOfEar:
             return "OutOfEar";
+        case MagicPodsCore::AapEarDetectionState::InCase:
+            return "InCase";
         default:
             return "Unknown";
         }
