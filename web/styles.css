@@ -11,6 +11,9 @@ body {
 }
 
 .container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     text-align: center;
 }
 
@@ -18,6 +21,8 @@ body {
     font-family: monospace;
     font-size: 1.2em;
     margin-bottom: 20px;
+    white-space: pre;
+    overflow: hidden;
 }
 
 .description {
@@ -56,8 +61,40 @@ body {
     background-position: center;
 }
 
+.logo-image {
+    max-width: 40vw;
+    height: auto;
+    margin-top: 50px;
+}
+
 @media (max-width: 768px) {
     .ascii {
-        font-size: 0.1em;
+        font-size: 0.5em;
+        line-height: 1;
+    }
+
+    .description {
+        font-size: 1em;
+    }
+
+    .repo-link {
+        font-size: 1em;
+        padding: 10px 20px;
+    }
+
+    .logo-image {
+        max-width: 70vw;
+        margin-top: 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    .ascii {
+        font-size: 0.35em;
+        line-height: 0.9;
+    }
+
+    .logo-image {
+        max-width: 85vw;
     }
 }
