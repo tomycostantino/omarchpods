@@ -1,4 +1,5 @@
 import logging
+import sys
 from websocket_client import WebSocketClient
 from textual.app import App, ComposeResult
 from textual.containers import Horizontal
@@ -9,6 +10,14 @@ from components.sidebar import Sidebar
 from components.device import Device
 from utils import sort_by_connection, is_connected
 
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+    handlers=[
+        logging.FileHandler('/tmp/omarchpods.log'),
+        logging.StreamHandler(sys.stderr)
+    ]
+)
 logger = logging.getLogger(__name__)
 
 APPLICATION_TITLE = """
@@ -50,9 +59,13 @@ class Omarchpods(App):
             self.notify(f"Failed to connect to server: {e}", severity="error")
 
     def select_device(self, device):
+        if not device or "address" not in device:
+            logger.warning("Attempted to select invalid device")
+            return
+
         is_different_device = (
             self._selected_device is None or
-            self._selected_device["address"] != device["address"]
+            self._selected_device.get("address") != device["address"]
         )
 
         self._selected_device = device
@@ -62,12 +75,19 @@ class Omarchpods(App):
             self.websocket_client.get_all()
 
     def toggle_device_connection(self, device):
+        if not device or "address" not in device:
+            logger.warning("Attempted to toggle connection for invalid device")
+            return
+
+        device_name = device.get("name", "Unknown Device")
+        device_address = device["address"]
+
         if is_connected(device):
-            self.websocket_client.disconnect_device(device["address"])
-            self.notify(f"Disconnecting from {device["name"]}")
+            self.websocket_client.disconnect_device(device_address)
+            self.notify(f"Disconnecting from {device_name}")
         else:
-            self.websocket_client.connect_device(device["address"])
-            self.notify(f"Connecting to {device["name"]}")
+            self.websocket_client.connect_device(device_address)
+            self.notify(f"Connecting to {device_name}")
 
     def set_anc_mode(self, address, capabilities):
         self.websocket_client.set_capabilities(address, capabilities)
@@ -87,13 +107,17 @@ class Omarchpods(App):
                 self.call_from_thread(self._merge_info_data, info)
 
     def _selected_device_disconnected(self, device_list):
+        if not self._selected_device or "address" not in self._selected_device:
+            return False
+
         for device in device_list:
             if (
-                device["address"] == self._selected_device["address"]
-                and device["connected"] is False
-                and self._selected_device["connected"]
+                device.get("address") == self._selected_device["address"]
+                and device.get("connected") is False
+                and self._selected_device.get("connected")
             ):
                 return True
+        return False
 
     def _merge_info_data(self, info: dict):
         self._selected_device = {**self._selected_device, **info}
