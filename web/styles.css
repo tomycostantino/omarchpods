@@ -63,10 +63,19 @@ body {
     background-position: center;
 }
 
-.preview-image {
-    max-width: 40vw;
+.demo-title {
+    margin-top: 40px;
+    margin-bottom: 20px;
+    font-size: 1.5em;
+    color: #ffffff;
+}
+
+.demo-video {
+    max-width: 70vw;
     height: auto;
-    margin-top: 50px;
+    margin-top: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
 }
 
 @media (max-width: 768px) {
@@ -86,9 +95,14 @@ body {
         padding: 10px 20px;
     }
 
-    .preview-image {
+    .logo-image {
         max-width: 50vw;
         margin-top: 20px;
+    }
+
+    .demo-video {
+        max-width: 85vw;
+        margin-top: 15px;
     }
 }
 
@@ -108,8 +122,13 @@ body {
         margin-bottom: 15px;
     }
 
-    .preview-image {
+    .logo-image {
         max-width: 45vw;
         margin-top: 15px;
+    }
+
+    .demo-video {
+        max-width: 90vw;
+        margin-top: 10px;
     }
 }
