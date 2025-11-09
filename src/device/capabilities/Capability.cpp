@@ -55,12 +55,12 @@ namespace MagicPodsCore
 
     void Capability::StopPlayback()
     {
-        ExecuteCommand("playerctl pause");
+        ExecuteCommand(OSD_COMMAND + " --playerctl pause");
     }
 
     void Capability::StartPlayback()
     {
-        ExecuteCommand("playerctl play");
+        ExecuteCommand(OSD_COMMAND + " --playerctl play");
     }
 
     void Capability::SwitchToNonBluetoothSink()
