@@ -40,7 +40,10 @@ class Omarchpods(App):
         yield Footer()
 
     def on_mount(self) -> None:
-        self.websocket_client.get_all()
+        try:
+            self.websocket_client.get_all()
+        except Exception as e:
+            self.notify(f"Failed to connect to server: {e}", severity="error")
 
     def select_device(self, device):
         is_different_device = (

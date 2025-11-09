@@ -1,6 +1,7 @@
 import websocket
 import json
 import threading
+from typing import Callable, Optional
 
 WEBSOCKET_SERVER_ADDRESS = "ws://localhost:2020"
 
@@ -19,29 +20,32 @@ class WebSocketClient:
         self.ws = None
         self._listen_thread = None
         self._message_callback = None
-
         self._connect()
 
-    def set_message_callback(self, callback):
+    def set_message_callback(self, callback: Callable[[dict], None]) -> None:
         self._message_callback = callback
 
-    def get_all(self):
+    def connect(self) -> None:
+        if self.ws is None:
+            self._connect()
+
+    def get_all(self) -> None:
         self._send(COMMANDS["get_all"])
 
-    def get_active_device_info(self):
+    def get_active_device_info(self) -> None:
         self._send(COMMANDS["get_active_device_info"])
 
-    def connect_device(self, device_address):
+    def connect_device(self, device_address: str) -> None:
         command = COMMANDS["connect_device"]
         command["arguments"] = {"address": device_address}
         self._send(command)
 
-    def disconnect_device(self, device_address):
+    def disconnect_device(self, device_address: str) -> None:
         command = COMMANDS["disconnect_device"]
         command["arguments"] = {"address": device_address}
         self._send(command)
 
-    def set_capabilities(self, device_address, capabilities):
+    def set_capabilities(self, device_address: str, capabilities: dict) -> None:
         command = COMMANDS["set_capabilities"].copy()
         command["arguments"] = {
             "address": device_address,
@@ -65,9 +69,13 @@ class WebSocketClient:
             self._listen_thread.start()
         except Exception as e:
             print(f"Connection failed: {e}")
-            exit(1)
+            self.ws = None
+            raise
 
     def _send(self, data):
+        if self.ws is None:
+            print("WebSocket not connected, cannot send message")
+            return
         self.ws.send(json.dumps(data))
 
     def _on_open(self, ws):
@@ -88,10 +96,3 @@ class WebSocketClient:
 
     def _on_close(self, ws, close_status_code, close_msg):
         print("Connection closed")
-
-
-if __name__ == "__main__":
-    ws = WebSocketClient()
-
-    while True:
-        ws.send(json.loads(input("Input your message")))

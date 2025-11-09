@@ -39,11 +39,12 @@ package() {
 
 
     "${pkgdir}/opt/omarchpods/venv/bin/pip" install --upgrade pip
-    "${pkgdir}/opt/omarchpods/venv/bin/pip" install textual websocket-client
+    "${pkgdir}/opt/omarchpods/venv/bin/pip" install -r ui/requirements-runtime.txt
 
 
     install -dm755 "${pkgdir}/opt/omarchpods/ui"
     cp -r ui/* "${pkgdir}/opt/omarchpods/ui/"
+    install -Dm644 "ui/requirements-runtime.txt" "${pkgdir}/opt/omarchpods/ui/requirements-runtime.txt"
 
     install -Dm644 "omarchpods.service" "${pkgdir}/usr/lib/systemd/user/omarchpods.service"
 
