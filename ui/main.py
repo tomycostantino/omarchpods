@@ -1,3 +1,4 @@
+import logging
 from websocket_client import WebSocketClient
 from textual.app import App, ComposeResult
 from textual.containers import Horizontal
@@ -7,6 +8,8 @@ from textual.binding import Binding
 from components.sidebar import Sidebar
 from components.device import Device
 from utils import sort_by_connection, is_connected
+
+logger = logging.getLogger(__name__)
 
 APPLICATION_TITLE = """
  ██████╗ ███╗   ███╗ █████╗ ██████╗  ██████╗██╗  ██╗██████╗  ██████╗ ██████╗ ███████╗
@@ -43,6 +46,7 @@ class Omarchpods(App):
         try:
             self.websocket_client.get_all()
         except Exception as e:
+            logger.error(f"Failed to connect to server: {e}")
             self.notify(f"Failed to connect to server: {e}", severity="error")
 
     def select_device(self, device):

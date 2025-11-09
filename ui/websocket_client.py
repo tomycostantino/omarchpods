@@ -1,9 +1,12 @@
 import websocket
 import json
 import threading
+import logging
 from typing import Callable, Optional
 
 WEBSOCKET_SERVER_ADDRESS = "ws://localhost:2020"
+
+logger = logging.getLogger(__name__)
 
 COMMANDS = {
     "get_all":                  {"method": "GetAll"},
@@ -24,10 +27,6 @@ class WebSocketClient:
 
     def set_message_callback(self, callback: Callable[[dict], None]) -> None:
         self._message_callback = callback
-
-    def connect(self) -> None:
-        if self.ws is None:
-            self._connect()
 
     def get_all(self) -> None:
         self._send(COMMANDS["get_all"])
@@ -68,31 +67,31 @@ class WebSocketClient:
             )
             self._listen_thread.start()
         except Exception as e:
-            print(f"Connection failed: {e}")
+            logger.error(f"Connection failed: {e}")
             self.ws = None
             raise
 
     def _send(self, data):
         if self.ws is None:
-            print("WebSocket not connected, cannot send message")
+            logger.warning("WebSocket not connected, cannot send message")
             return
         self.ws.send(json.dumps(data))
 
     def _on_open(self, ws):
-        print("Connection opened")
+        logger.info("WebSocket connection opened")
 
     def _on_message(self, ws, message):
-        print(f"Message: {message}")
+        logger.debug(f"Received message: {message}")
         if self._message_callback:
             try:
                 data = json.loads(message)
                 self._message_callback(data)
             except json.JSONDecodeError:
-                print(f"Failed to parse message: {message}")
+                logger.error(f"Failed to parse message: {message}")
         return message
 
     def _on_error(self, ws, error):
-        print(f"Error: {error}")
+        logger.error(f"WebSocket error: {error}")
 
     def _on_close(self, ws, close_status_code, close_msg):
-        print("Connection closed")
+        logger.info("WebSocket connection closed")
