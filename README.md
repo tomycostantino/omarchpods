@@ -2,6 +2,8 @@
 
 ![Omarchpods](web/assets/omarchpods.png)
 
+![OmarchpodsDemo](web/assets/presentation.mp4)
+
 > **Note:** This project is new and has only been tested with the my AirPods. While the supported devices list below is inherited from MagicPodsCore, not all devices have been verified to work with this fork. PRs for testing and fixing specific devices are welcome!
 
 A fork of [MagicPodsCore](https://github.com/steam3d/MagicPodsCore) with a TUI, designed for Omarchy.

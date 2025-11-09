@@ -9,3 +9,4 @@ class AncMode(IntEnum):
     TRANSPARENCY = 2
     ADAPTIVE = 4
     NOISE_CANCELLATION = 16
+
