@@ -53,13 +53,20 @@ namespace MagicPodsCore
         return result;
     }
 
+    std::string Capability::GetPlayerStatus()
+    {
+      return ExecuteCommandWithOutput("playerctl status");
+    }
+
     void Capability::StopPlayback()
     {
+        if (GetPlayerStatus() == "Paused") return;
         ExecuteCommand(OSD_COMMAND + " --playerctl pause");
     }
 
     void Capability::StartPlayback()
     {
+        if (GetPlayerStatus() == "Playing") return;
         ExecuteCommand(OSD_COMMAND + " --playerctl play");
     }
 
