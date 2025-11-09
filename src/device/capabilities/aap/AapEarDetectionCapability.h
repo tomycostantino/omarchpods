@@ -16,8 +16,7 @@ namespace MagicPodsCore
 
         void HandleEarRemoved();
         void HandleEarInserted();
-        void PausePlayback();
-        void ResumePlayback();
+        void TogglePlayback();
         void SwitchToNonBluetoothSink();
         void SwitchToBluetoothSink();
 

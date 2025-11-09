@@ -43,7 +43,7 @@ namespace MagicPodsCore
 
     void AapEarDetectionCapability::HandleEarRemoved()
     {
-        PausePlayback();
+        TogglePlayback();
         std::this_thread::sleep_for(std::chrono::milliseconds(250));
         SwitchToNonBluetoothSink();
     }
@@ -51,17 +51,12 @@ namespace MagicPodsCore
     void AapEarDetectionCapability::HandleEarInserted()
     {
         SwitchToBluetoothSink();
-        ResumePlayback();
+        TogglePlayback();
     }
 
-    void AapEarDetectionCapability::PausePlayback()
+    void AapEarDetectionCapability::TogglePlayback()
     {
-        ExecuteCommand("playerctl pause");
-    }
-
-    void AapEarDetectionCapability::ResumePlayback()
-    {
-        ExecuteCommand("playerctl play");
+        ExecuteCommand("playerctl play-pause");
     }
 
     void AapEarDetectionCapability::SwitchToNonBluetoothSink()
