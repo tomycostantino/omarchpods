@@ -45,7 +45,7 @@ package() {
     install -dm755 "${pkgdir}/opt/omarchpods/ui"
     cp -r ui/* "${pkgdir}/opt/omarchpods/ui/"
 
-    install -Dm644 "omarchpods.service" "${pkgdir}/usr/lib/systemd/system/omarchpods.service"
+    install -Dm644 "omarchpods.service" "${pkgdir}/usr/lib/systemd/user/omarchpods.service"
 
     cat > "${pkgdir}/usr/bin/omarchy-launch-omarchpods" << 'EOF'
 #!/bin/bash

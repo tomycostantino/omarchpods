@@ -1,8 +1,8 @@
 [Unit]
 Description=Omarchpods Core Service
 Documentation=https://github.com/steam3d/MagicPodsCore
-After=bluetooth.service
-Wants=bluetooth.service
+After=graphical-session.target
+Wants=graphical-session.target
 
 [Service]
 Type=simple
@@ -12,12 +12,6 @@ RestartSec=5
 StandardOutput=journal
 StandardError=journal
 
-NoNewPrivileges=true
-PrivateTmp=true
-ProtectSystem=strict
-ProtectHome=true
-ReadWritePaths=/var/lib/bluetooth
-
 [Install]
-WantedBy=multi-user.target
+WantedBy=default.target
 

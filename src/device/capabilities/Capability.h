@@ -13,7 +13,7 @@ namespace MagicPodsCore
     class Capability
     {
     private:
-      const std::string OSD_COMMAND = "swayosd-client --monitor \"$(hyprctl monitors -j | jq -r '.[] | select(.focused == true).name')\"";
+      const std::string OSD_COMMAND = "swayosd-client";
       std::string GetPlayerStatus();
 
     protected:
