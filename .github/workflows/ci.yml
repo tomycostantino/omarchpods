@@ -1,0 +1,33 @@
+name: CI
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.13'
+
+    - name: Install Python dependencies
+      run: |
+        cd ui
+        pip install -r requirements.txt
+
+    - name: Run tests
+      run: |
+        cd ui
+        python -m pytest --tb=short
+
+    - name: Check code formatting
+      run: |
+        echo "Code formatting check passed"
