@@ -14,6 +14,10 @@ cd omarchpods && \
 bash install.sh
 ```
 
+### Heads up
+
+It will take a little bit of time to compile the C++ code, so please be patient during this step.
+
 The UI can be launched with:
 
 ```bash
