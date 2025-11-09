@@ -14,6 +14,47 @@ cd omarchpods && \
 bash install.sh
 ```
 
+The UI can be launched with:
+
+```bash
+omarchy-launch-omarchpods
+```
+
+## Optional Configuration
+
+### Waybar Integration
+
+To add Omarchpods to your waybar, add a custom module to your waybar config (`~/.config/waybar/config`):
+
+At the top of the file add `"custom/omarchpods"` to the module you'd like the icon:
+
+```json
+  "modules-left": [...],
+  "modules-center": [...],
+  "modules-right": [
+    ...,
+    "custom/omarchpods"
+  ],
+```
+
+Then all the way to the bottom go:
+
+```json
+"custom/omarchpods": {
+    "format": " 🎧 ",
+    "on-click": "omarchy-launch-omarchpods",
+    "tooltip": false
+}
+```
+
+### Keyboard Binding (Hyprland)
+
+To add a keyboard shortcut to open Omarchpods UI with `SUPER + SHIFT + H` (or any other you'd like), add this to your Hyprland config (`~/.config/hypr/hyprland.conf`):
+
+```
+bind = SUPER SHIFT, H, exec, omarchy-launch-omarchpods
+```
+
 ## 🎧 Headphones supported
 
 | Apple            | Beats                  | Samsung           |
