@@ -22,7 +22,8 @@ namespace MagicPodsCore
         void ExecuteCommand(const std::string& command);
         std::string ExecuteCommandWithOutput(const std::string& command);
 
-        void TogglePlayback();
+        void StopPlayback();
+        void StartPlayback();
         void SwitchToNonBluetoothSink();
         void SwitchToBluetoothSink(std::string btAddr);
 
