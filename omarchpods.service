@@ -1,8 +1,8 @@
 [Unit]
 Description=Omarchpods Core Service
 Documentation=https://github.com/steam3d/MagicPodsCore
-After=graphical-session.target
-Wants=graphical-session.target
+After=bluetooth.target
+Wants=bluetooth.target
 
 [Service]
 Type=simple
