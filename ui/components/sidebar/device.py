@@ -1,12 +1,18 @@
+from typing import Dict, Any
 from textual.widgets import Button
 
 from utils import device_status_text
 
 
 class Device(Button):
-    def __init__(self, device: dict, **kwargs):
+    def __init__(self, device: Dict[str, Any], **kwargs):
+        """
+        Args:
+            device: Device data dictionary containing name and connection info
+        """
         self._device = device
-        label = f"{device['name']}\n[dim]{device_status_text(device)}[/dim]"
+        device_name = device.get('name', 'Unknown Device')
+        label = f"{device_name}\n[dim]{device_status_text(device)}[/dim]"
 
         super().__init__(label, **kwargs)
         self.add_class("device-button")

@@ -1,3 +1,4 @@
+from typing import List, Dict, Any
 from textual.reactive import reactive
 from textual.widgets import Static
 from textual.containers import Container, Vertical
@@ -7,13 +8,13 @@ from .device import Device
 
 
 class Sidebar(Vertical):
-    device_list = reactive([])
+    device_list: List[Dict[str, Any]] = reactive([])
 
     def compose(self) -> ComposeResult:
         yield Static("[b]Devices[/b]", classes="sidebar-header")
         yield Container(id="device-list")
 
-    def watch_device_list(self, device_list: list) -> None:
+    def watch_device_list(self, device_list: List[Dict[str, Any]]) -> None:
         container = self.query_one("#device-list")
         container.remove_children()
 
