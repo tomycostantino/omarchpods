@@ -7,7 +7,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    min-height: 100vh;
 }
 
 .container {
@@ -15,6 +15,8 @@ body {
     flex-direction: column;
     align-items: center;
     text-align: center;
+    padding: 20px;
+    max-width: 100%;
 }
 
 .ascii {
@@ -71,10 +73,12 @@ body {
     .ascii {
         font-size: 0.5em;
         line-height: 1;
+        margin-bottom: 15px;
     }
 
     .description {
         font-size: 1em;
+        margin-bottom: 20px;
     }
 
     .repo-link {
@@ -83,18 +87,29 @@ body {
     }
 
     .logo-image {
-        max-width: 70vw;
+        max-width: 50vw;
         margin-top: 20px;
     }
 }
 
 @media (max-width: 480px) {
+    .container {
+        padding: 15px;
+    }
+
     .ascii {
         font-size: 0.35em;
         line-height: 0.9;
+        margin-bottom: 10px;
+    }
+
+    .description {
+        font-size: 0.9em;
+        margin-bottom: 15px;
     }
 
     .logo-image {
-        max-width: 85vw;
+        max-width: 45vw;
+        margin-top: 15px;
     }
 }
