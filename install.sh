@@ -41,4 +41,5 @@ fi
 
 echo -e "\n${GREEN}=== Installation Complete ===${NC}"
 echo -e "Check service status: ${YELLOW}systemctl status omarchpods.service${NC}"
+echo -e "Launch UI with: ${YELLOW}omarchy-launch-omarchpods${NC}"
 

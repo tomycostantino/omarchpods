@@ -47,6 +47,12 @@ package() {
 
     install -Dm644 "omarchpods.service" "${pkgdir}/usr/lib/systemd/system/omarchpods.service"
 
+    cat > "${pkgdir}/usr/bin/omarchy-launch-omarchpods" << 'EOF'
+#!/bin/bash
+xdg-terminal-exec --app-id=com.omarchy.Omarchy --title=Omarchpods python /opt/omarchpods/ui/main.py
+EOF
+    chmod +x "${pkgdir}/usr/bin/omarchy-launch-omarchpods"
+
     if [ -f "LICENSE" ]; then
         install -Dm644 "LICENSE" "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
     fi
