@@ -12,6 +12,41 @@ class TestVolumeController:
         yielded = list(controller.compose())
         assert len(yielded) == 2
 
+    def test_volume_controller_timer_setup(self):
+        controller = VolumeController()
+        assert controller._volume_timer is None
+
+        timer_calls = []
+
+        def mock_set_interval(interval, callback):
+            timer_calls.append((interval, callback))
+            return type('MockTimer', (), {'stop': lambda: None})()
+
+        controller.set_interval = mock_set_interval
+
+        controller.on_mount()
+
+        assert len(timer_calls) == 1
+        interval, callback = timer_calls[0]
+        assert interval == 1.0
+        assert callable(callback)
+
+    def test_volume_controller_timer_cleanup(self):
+        controller = VolumeController()
+
+        stop_called = [False]
+
+        class MockTimer:
+            def stop(self):
+                stop_called[0] = True
+
+        mock_timer = MockTimer()
+        controller._volume_timer = mock_timer
+
+        controller.on_unmount()
+
+        assert stop_called[0]
+
 
 class TestVolumeSlider:
     def test_volume_slider_creation_default(self):

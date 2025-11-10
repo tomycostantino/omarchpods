@@ -6,6 +6,7 @@ from textual.widgets import Static
 from textual import on
 from textual.events import Click
 from textual.message import Message
+from textual.timer import Timer
 
 
 class VolumeSlider(Static):
@@ -56,15 +57,30 @@ class VolumeController(Vertical):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self._current_volume = self._get_current_volume()
+        self._volume_timer: Timer | None = None
 
     def compose(self) -> ComposeResult:
-        yield Static("[b]System Volume (click slider to adjust):[/b]")
+        yield Static("[b]🖱️ System Volume (click slider to adjust):[/b]")
         yield VolumeSlider(initial_value=self._current_volume, id="volume-slider")
+
+    def on_mount(self) -> None:
+        self._volume_timer = self.set_interval(1.0, self._check_volume_update)
+
+    def on_unmount(self) -> None:
+        if self._volume_timer:
+            self._volume_timer.stop()
 
     @on(VolumeSlider.Clicked)
     def on_volume_changed(self, event: VolumeSlider.Clicked) -> None:
         self._set_system_volume(event.value)
         self._current_volume = event.value
+
+    def _check_volume_update(self) -> None:
+        current_system_volume = self._get_current_volume()
+        if current_system_volume != self._current_volume:
+            self._current_volume = current_system_volume
+            slider = self.query_one("#volume-slider", VolumeSlider)
+            slider.value = current_system_volume
 
     def _get_current_volume(self) -> int:
         try:
