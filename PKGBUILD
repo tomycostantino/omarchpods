@@ -35,16 +35,10 @@ package() {
     install -Dm755 "build/MagicPodsCore" "${pkgdir}/usr/bin/omarchpods"
 
     install -dm755 "${pkgdir}/opt/omarchpods"
-    python -m venv "${pkgdir}/opt/omarchpods/venv"
-
-
-    "${pkgdir}/opt/omarchpods/venv/bin/pip" install --upgrade pip
-    "${pkgdir}/opt/omarchpods/venv/bin/pip" install -r ui/requirements-runtime.txt
 
 
     install -dm755 "${pkgdir}/opt/omarchpods/ui"
     cp -r ui/* "${pkgdir}/opt/omarchpods/ui/"
-    install -Dm644 "ui/requirements-runtime.txt" "${pkgdir}/opt/omarchpods/ui/requirements-runtime.txt"
 
     install -Dm644 "omarchpods.service" "${pkgdir}/usr/lib/systemd/user/omarchpods.service"
 

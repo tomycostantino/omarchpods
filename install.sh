@@ -21,7 +21,7 @@ if [ "$EUID" -eq 0 ]; then
 fi
 
 echo -e "${YELLOW}Installing system dependencies...${NC}"
-sudo pacman -S --needed --noconfirm base-devel cmake bluez python git
+sudo pacman -S --needed --noconfirm base-devel cmake bluez python python-websockets python-textual python-websocket-client git
 
 echo -e "${YELLOW}Building Omarchpods package...${NC}"
 makepkg -si --noconfirm
