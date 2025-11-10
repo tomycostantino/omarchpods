@@ -1,18 +1,26 @@
 import pytest
+from unittest.mock import Mock
+from textual.events import Click
 from components.volume.volume_controller import VolumeController, VolumeSlider
 
 
 class TestVolumeController:
-    def test_volume_controller_creation(self):
+    def test_volume_controller_creation(self, monkeypatch):
+        mock_run = Mock(return_value=Mock(stdout="Volume: 0: 50% / 50% / 50%"))
+        monkeypatch.setattr('subprocess.run', mock_run)
         controller = VolumeController()
         assert controller is not None
 
-    def test_volume_controller_compose(self):
+    def test_volume_controller_compose(self, monkeypatch):
+        mock_run = Mock(return_value=Mock(stdout="Volume: 0: 50% / 50% / 50%"))
+        monkeypatch.setattr('subprocess.run', mock_run)
         controller = VolumeController()
         yielded = list(controller.compose())
         assert len(yielded) == 2
 
-    def test_volume_controller_timer_setup(self):
+    def test_volume_controller_timer_setup(self, monkeypatch):
+        mock_run = Mock(return_value=Mock(stdout="Volume: 0: 50% / 50% / 50%"))
+        monkeypatch.setattr('subprocess.run', mock_run)
         controller = VolumeController()
         assert controller._volume_timer is None
 
@@ -31,7 +39,9 @@ class TestVolumeController:
         assert interval == 1.0
         assert callable(callback)
 
-    def test_volume_controller_timer_cleanup(self):
+    def test_volume_controller_timer_cleanup(self, monkeypatch):
+        mock_run = Mock(return_value=Mock(stdout="Volume: 0: 50% / 50% / 50%"))
+        monkeypatch.setattr('subprocess.run', mock_run)
         controller = VolumeController()
 
         stop_called = [False]
@@ -96,14 +106,14 @@ class TestVolumeSlider:
 
     def test_volume_slider_click_left_side(self):
         slider = VolumeSlider()
-        click_event = type('ClickEvent', (), {'x': 5})()
+        click_event = Mock(x=5)
         slider.on_click(click_event)
 
         assert slider.value < 25
 
     def test_volume_slider_click_right_side(self):
         slider = VolumeSlider()
-        click_event = type('ClickEvent', (), {'x': 20})()
+        click_event = Mock(x=20)
         slider.on_click(click_event)
 
         assert slider.value > 75
@@ -112,7 +122,7 @@ class TestVolumeSlider:
         slider = VolumeSlider()
         original_value = slider.value
 
-        click_event = type('ClickEvent', (), {'x': 0})()
+        click_event = Mock(x=0)
         slider.on_click(click_event)
 
         assert slider.value == original_value
