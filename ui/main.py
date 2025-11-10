@@ -7,7 +7,7 @@ from textual.containers import Horizontal
 from components.sidebar import Sidebar
 from components.device import Device
 from components.header import ApplicationHeader
-from components.volume.volume_controller import VolumeController
+from components.volume import VolumeController
 from utils import sort_by_connection, is_connected
 
 logging.basicConfig(
