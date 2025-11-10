@@ -8,6 +8,20 @@
     border-bottom: solid $border;
 }
 
+#global-volume {
+    width: 100%;
+    height: auto;
+    padding: 1;
+    border-bottom: solid $border;
+    border-top: solid $border;
+    text-style: bold;
+}
+
+#global-volume VolumeSlider {
+    text-style: bold;
+    color: $success;
+}
+
 Sidebar {
     width: 30;
     border-right: solid $border;

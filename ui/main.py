@@ -8,6 +8,7 @@ from textual.binding import Binding
 
 from components.sidebar import Sidebar
 from components.device import Device
+from components.volume.volume_controller import VolumeController
 from utils import sort_by_connection, is_connected
 
 logging.basicConfig(
@@ -49,6 +50,7 @@ class Omarchpods(App):
         with Horizontal():
             yield Sidebar()
             yield Device()
+        yield VolumeController(id="global-volume")
         yield Footer()
 
     def on_mount(self) -> None:
