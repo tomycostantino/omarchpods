@@ -3,10 +3,25 @@
 // License: GPL-3.0
 
 #include "./dbus/DBusService.h"
+#include "Logger.h"
 
 namespace MagicPodsCore {
 
-    DBusService::DBusService() : _rootProxy{sdbus::createProxy("org.bluez", "/")},  _defaultBluetoothAdapterProxy{sdbus::createProxy("org.bluez", "/org/bluez/hci0")} {
+    DBusService::DBusService() : _rootProxy{sdbus::createProxy("org.bluez", "/")} {
+        std::string adapterPath = "/org/bluez/hci0";
+        std::map<sdbus::ObjectPath, std::map<std::string, std::map<std::string, sdbus::Variant>>> managedObjects;
+        try {
+            _rootProxy->callMethod("GetManagedObjects").onInterface("org.freedesktop.DBus.ObjectManager").storeResultsTo(managedObjects);
+            for (const auto& [path, interfaces] : managedObjects) {
+                if (interfaces.contains("org.bluez.Adapter1")) {
+                    adapterPath = static_cast<std::string>(path);
+                    break;
+                }
+            }
+        } catch (const sdbus::Error& e) {
+            Logger::Error("Failed to get managed objects: %s", e.what());
+        }
+        _defaultBluetoothAdapterProxy = sdbus::createProxy("org.bluez", adapterPath);
         //TODO: See comment DeviceFetcher.cpp
         _rootProxy->uponSignal("InterfacesAdded").onInterface("org.freedesktop.DBus.ObjectManager").call([this](sdbus::ObjectPath objectPath, std::map<std::string, std::map<std::string, sdbus::Variant>> interfaces) {
             TryCreateDevice(objectPath, interfaces);
@@ -25,7 +40,11 @@ namespace MagicPodsCore {
         });
         _defaultBluetoothAdapterProxy->finishRegistration();
 
-        _isBluetoothAdapterPowered.SetValue(_defaultBluetoothAdapterProxy->getProperty("Powered").onInterface("org.bluez.Adapter1").get<bool>());
+        try {
+            _isBluetoothAdapterPowered.SetValue(_defaultBluetoothAdapterProxy->getProperty("Powered").onInterface("org.bluez.Adapter1").get<bool>());
+        } catch (const sdbus::Error& e) {
+            Logger::Warn("Failed to get Bluetooth adapter powered status: %s", e.what());
+        }
     }
 
     std::set<std::shared_ptr<DBusDeviceInfo>> DBusService::GetBtDevices() {
