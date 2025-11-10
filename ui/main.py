@@ -8,6 +8,7 @@ from components.sidebar import Sidebar
 from components.device import Device
 from components.header import ApplicationHeader
 from components.volume import VolumeController
+from components.output import OutputSelector
 from utils import sort_by_connection, is_connected
 
 logging.basicConfig(
@@ -37,6 +38,7 @@ class Omarchpods(App):
         with Horizontal():
             yield Sidebar()
             yield Device()
+        yield OutputSelector(id="output-selector")
         yield VolumeController(id="volume-controller")
 
     def on_mount(self) -> None:
@@ -80,6 +82,16 @@ class Omarchpods(App):
     def set_anc_mode(self, address, capabilities):
         self.websocket_client.set_capabilities(address, capabilities)
         self.notify(f"Setting ANC capabilities")
+
+    def set_default_output(self, sink_name: str):
+        try:
+            import subprocess
+            subprocess.run(
+                ["pactl", "set-default-sink", sink_name],
+                check=True
+            )
+        except subprocess.CalledProcessError:
+            self.notify(f"Failed to set default output", severity="error")
 
     def _handle_websocket_message(self, data: dict) -> None:
         if "headphones" in data:

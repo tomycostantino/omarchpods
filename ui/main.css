@@ -6,6 +6,33 @@ ApplicationHeader {
     border-bottom: solid $border;
 }
 
+OutputSelector {
+    width: 100%;
+    height: auto;
+    border-top: solid $border;
+    padding: 0;
+}
+
+OutputSelector #output-buttons-container {
+    width: 100%;
+    height: auto;
+    padding: 0;
+}
+
+OutputSelector OutputButton {
+    margin-right: 1;
+    width: auto;
+    min-width: 10;
+}
+
+OutputSelector .output-button-active {
+    background: $success;
+}
+
+OutputSelector .output-button-inactive {
+    background: $panel;
+}
+
 VolumeController {
     width: 100%;
     height: auto;
@@ -16,6 +43,10 @@ VolumeController {
 VolumeController VolumeSlider {
     text-style: bold;
     color: $success;
+}
+
+ToggleConnectionButton {
+    width: 100%;
 }
 
 Sidebar {

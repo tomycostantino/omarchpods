@@ -10,3 +10,4 @@ class AncMode(IntEnum):
     ADAPTIVE = 4
     NOISE_CANCELLATION = 16
 
+
