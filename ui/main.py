@@ -3,11 +3,10 @@ import sys
 from websocket_client import WebSocketClient
 from textual.app import App, ComposeResult
 from textual.containers import Horizontal
-from textual.widgets import Footer, Static
-from textual.binding import Binding
 
 from components.sidebar import Sidebar
 from components.device import Device
+from components.header import ApplicationHeader
 from components.volume.volume_controller import VolumeController
 from utils import sort_by_connection, is_connected
 
@@ -21,21 +20,9 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
-APPLICATION_TITLE = """
- ██████╗ ███╗   ███╗ █████╗ ██████╗  ██████╗██╗  ██╗██████╗  ██████╗ ██████╗ ███████╗
-██╔═══██╗████╗ ████║██╔══██╗██╔══██╗██╔════╝██║  ██║██╔══██╗██╔═══██╗██╔══██╗██╔════╝
-██║   ██║██╔████╔██║███████║██████╔╝██║     ███████║██████╔╝██║   ██║██║  ██║███████╗
-██║   ██║██║╚██╔╝██║██╔══██║██╔══██╗██║     ██╔══██║██╔═══╝ ██║   ██║██║  ██║╚════██║
-╚██████╔╝██║ ╚═╝ ██║██║  ██║██║  ██║╚██████╗██║  ██║██║     ╚██████╔╝██████╔╝███████║
- ╚═════╝ ╚═╝     ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝ ╚═════╝╚═╝  ╚═╝╚═╝      ╚═════╝ ╚═════╝ ╚══════╝
-"""
-
 
 class Omarchpods(App):
     CSS_PATH = "main.css"
-    BINDINGS = [
-        Binding("q", "quit", "Quit", show=True),
-    ]
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -46,12 +33,11 @@ class Omarchpods(App):
         self._selected_device = None
 
     def compose(self) -> ComposeResult:
-        yield Static(APPLICATION_TITLE, id="ascii-header")
+        yield ApplicationHeader()
         with Horizontal():
             yield Sidebar()
             yield Device()
-        yield VolumeController(id="global-volume")
-        yield Footer()
+        yield VolumeController(id="volume-controller")
 
     def on_mount(self) -> None:
         try:

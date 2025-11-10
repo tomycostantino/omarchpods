@@ -15,7 +15,6 @@ class Device(Button):
         label = f"{device_name}\n[dim]{device_status_text(device)}[/dim]"
 
         super().__init__(label, **kwargs)
-        self.add_class("device-button")
 
     def on_button_pressed(self) -> None:
         self.app.select_device(self._device)

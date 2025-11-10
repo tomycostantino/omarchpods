@@ -1,23 +1,19 @@
-#ascii-header {
+ApplicationHeader {
     width: 100%;
-    height: auto;
     content-align: center middle;
     text-align: center;
     color: $accent;
-    padding: 1;
     border-bottom: solid $border;
 }
 
-#global-volume {
+VolumeController {
     width: 100%;
     height: auto;
-    padding: 1;
     border-bottom: solid $border;
     border-top: solid $border;
-    text-style: bold;
 }
 
-#global-volume VolumeSlider {
+VolumeController VolumeSlider {
     text-style: bold;
     color: $success;
 }
@@ -38,7 +34,7 @@ Sidebar {
     height: auto;
 }
 
-.device-button {
+Sidebar Device {
     width: 100%;
     margin-bottom: 1;
     text-align: left;
@@ -58,11 +54,6 @@ Sidebar {
     text-style: bold;
     padding: 1;
     background: $boost;
-    margin-bottom: 1;
-}
-
-.device-status {
-    padding: 1;
     margin-bottom: 1;
 }
 
