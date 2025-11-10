@@ -60,7 +60,7 @@ namespace MagicPodsCore
 
     void Capability::StopPlayback()
     {
-        if (GetPlayerStatus() == "Paused") return;
+        if (GetPlayerStatus() != "Playing") return;
         ExecuteCommand(OSD_COMMAND + " --playerctl pause");
     }
 
