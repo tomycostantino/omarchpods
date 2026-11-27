@@ -12,9 +12,15 @@ A fork of [MagicPodsCore](https://github.com/steam3d/MagicPodsCore) with a TUI, 
 ## Install
 
 ```
-git clone git@github.com:tomycostantino/omarchpods.git && \
+git clone https://github.com/tomycostantino/omarchpods.git && \
 cd omarchpods && \
 bash install.sh
+```
+
+If you have a GitHub SSH key configured, you can use the SSH URL instead:
+
+```
+git clone git@github.com:tomycostantino/omarchpods.git
 ```
 
 ### Heads up
